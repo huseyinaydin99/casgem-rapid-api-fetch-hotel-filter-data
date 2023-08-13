@@ -4,5 +4,73 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = null;
+    int count = 0;
 }
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="conatiner">
+    <hr />
+    <form method="POST">
+        <label for="search">Şehir:</label>
+        <input type="text" name="search" class="form-control" placeholder="Aramak istediğiniz şehri girin." />
+        <label for="locale">Lokal:</label>
+        <input type="text" name="locale" class="form-control" placeholder="Aramak istediğiniz ülkeyi girin. Örnek: en_US, tr_TR gibi." />
+        <input type="submit" value="Ara" class="btn btn-primary" />
+    </form>
+    <hr />
+    @using (Html.BeginForm("BeforeFetchHotelInfoDataWriteExcelFile", "Hotel", FormMethod.Post))
+    {
+        <label for="fileName">Çekilen veriyi Excel'e aktar:</label>
+        <input type="text" name="fileName" class="form-control" placeholder="Dosya ismi veriniz." />
+        <input type="submit" class="btn btn-primary" value="Veriyi Excel formatında indir." />
+    }
+    <hr />
+    <form action="/Hotel/WriteHotelInfoExcelFile" method="POST">
+        <label for="search">Ara ve gelen veriyi Excel'e aktar.</label>
+        <input type="text" name="fileName" class="form-control" placeholder="Dosya ismi veriniz" />
+        <label for="search">Şehir:</label>
+        <input type="text" name="search" class="form-control" placeholder="Aramak istediğiniz şehri girin." />
+        <label for="locale">Lokal:</label>
+        <input type="text" name="locale" class="form-control" placeholder="Aramak istediğiniz ülkeyi girin. Örnek: en_US, tr_TR gibi." />
+        <input type="submit" value="Ara ve Excel formatında indir." class="btn btn-primary" />
+    </form>
+
+    <hr />
+    <br />
+    <table class="table-bordered">
+        <tr>
+            <th>#</th>
+            <th>GeoId</th>
+            <th>DestinationId</th>
+            <th>LandmarkCityDestinationId</th>
+            <th>Type</th>
+            <th>RedirectPage</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>SearchDetail</th>
+            <th>Caption</th>
+            <th>Name_</th>
+        </tr>
+        @foreach (var item in Model.HotelDetailInfos)
+        {
+            count++;
+            <tr>
+                <td>
+                    @count;
+                </td>
+                <td>@item.geoId</td>
+                <td>@item.destinationId</td>
+                <td>@item.landmarkCityDestinationId</td>
+                <td>@item.redirectPage</td>
+                <td>@item.latitude</td>
+                <td>@item.longitude</td>
+                <td>@item.searchDetail</td>
+                <td>@item.caption</td>
+                <td>@item.name_</td>
+            </tr>
+        }
+    </table>
+</div>
 

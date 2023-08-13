@@ -9,7 +9,7 @@ namespace Casgem.RapidAPI.Hotel.DAL.DapperConfiguration.Concrete
     public class DapperImpl : IDapper
     {
         private readonly IConfiguration _config;
-        private string Connectionstring = "DefaultConnection";
+        private static string ConnectionString = "Server=DESKTOP-13123BI; Initial Catalog=CasgemHotelRapidAPIDB; Integrated Security=true;";
 
         public DapperImpl(IConfiguration config)
         {
@@ -27,25 +27,25 @@ namespace Casgem.RapidAPI.Hotel.DAL.DapperConfiguration.Concrete
 
         public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = new SqlConnection(DapperImpl.ConnectionString);
             return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = new SqlConnection(DapperImpl.ConnectionString);
             return db.Query<T>(sp, parms, commandType: commandType).ToList();
         }
 
         public DbConnection GetDbconnection()
         {
-            return new SqlConnection(_config.GetConnectionString(Connectionstring));
+            return new SqlConnection(DapperImpl.ConnectionString);
         }
 
         public T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = new SqlConnection(DapperImpl.ConnectionString);
             try
             {
                 if (db.State == ConnectionState.Closed)
@@ -79,7 +79,7 @@ namespace Casgem.RapidAPI.Hotel.DAL.DapperConfiguration.Concrete
         public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = new SqlConnection(DapperImpl.ConnectionString);
             try
             {
                 if (db.State == ConnectionState.Closed)

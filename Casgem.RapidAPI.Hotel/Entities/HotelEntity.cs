@@ -8,7 +8,7 @@
         public string trackingID { get; set; }
         public bool misspellingfallback { get; set; }
         public Suggestion[] suggestions { get; set; }
-        public bool geocodeFallback { get; set; }
+        
 
         public class Suggestion
         {
@@ -29,6 +29,7 @@
             public string caption { get; set; }
             public string name { get; set; }
         }
+        public bool geocodeFallback { get; set; }
 
     }
 }
